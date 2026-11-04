@@ -1,0 +1,47 @@
+services:
+  t2w-sonos:
+    build: .
+    container_name: t2w-sonos
+    # Host networking: UPnP discovery (SSDP multicast) needs the real LAN.
+    network_mode: host
+    restart: unless-stopped
+    init: true
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    # Nothing has to be set: the T2 W and all Sonos rooms are found
+    # automatically. Every value below is optional.
+    environment:
+      # Which Sonos rooms appear in the Pro-Ject app as "T2 W – <room>".
+      # Empty: all rooms. Names as in the Sonos app, comma-separated.
+      SONOS_ROOMS: ""
+      # Rooms to leave out, e.g. "Bad,Garage".
+      SONOS_EXCLUDE: ""
+      # IP of the T2 W. Only needed if it is not found automatically or
+      # there are several turntables in the network.
+      T2W_HOST: ""
+      # Name pattern in the Pro-Ject app.
+      FRIENDLY_NAME_FORMAT: "T2 W – {room}"
+      # Audio held in reserve. Playback starts after BUFFER_START_SECONDS; after
+      # each T2 W dropout the reserve grows by 2 s, up to BUFFER_SECONDS.
+      # Dropouts shorter than the reserve stay inaudible. The reserve is also
+      # the delay between needle and speaker. Same value twice = fixed buffer.
+      BUFFER_START_SECONDS: "1"
+      BUFFER_SECONDS: "5"
+      # Restart Sonos automatically if it stops on its own during playback.
+      WATCHDOG: "1"
+      # If the T2 W sends Play but no audio follows within SOURCE_RECOVERY_SECONDS
+      # (seen after waking from standby), restart its stream like re-selecting
+      # the speaker in the Pro-Ject app does. At most 2 tries in 10 minutes.
+      SOURCE_RECOVERY: "1"
+      SOURCE_RECOVERY_SECONDS: "20"
+      # IP of this computer. Only needed if it has several network connections.
+      ADVERTISED_HOST: ""
+      LOG_LEVEL: "INFO"
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
