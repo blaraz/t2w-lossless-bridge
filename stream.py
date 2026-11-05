@@ -34,6 +34,7 @@ from flac import (
     streaminfo_header,
 )
 
+VERSION: Final = "1.0.0"
 LOG: Final = logging.getLogger("t2w.stream")
 MAX_REQUEST_BYTES: Final = 8 * 1024
 CLIENT_DRAIN_TIMEOUT_SECONDS: Final = 20.0
@@ -644,6 +645,7 @@ class RelayService:
     async def health(self) -> dict[str, object]:
         jitter = self._jitter
         return {
+            "version": VERSION,
             "status": "streaming" if self._engine_active else "idle",
             "upstream": self.upstream_url or None,
             "clients": await self.fanout.count(),

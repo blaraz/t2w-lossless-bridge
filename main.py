@@ -23,7 +23,7 @@ from urllib.parse import urlsplit
 
 from discovery import find_t2w
 from rooms import DEFAULT_UUID, RoomSync, SonosRooms, SpeakerSettings, parse_room_list, room_key, room_uuid
-from stream import MAX_REQUEST_BYTES, RelayConfig, RelayService
+from stream import MAX_REQUEST_BYTES, VERSION, RelayConfig, RelayService
 from t2w import T2WControl
 from upnp import (
     Renderer,
@@ -253,6 +253,7 @@ async def run(
 
 
 async def main() -> None:
+    LOG.info("t2w-lossless-bridge %s", VERSION)
     settings = settings_from_environment()
     if shutil.which(settings.relay.ffmpeg) is None:
         raise SystemExit(f"ffmpeg not found ({settings.relay.ffmpeg!r})")

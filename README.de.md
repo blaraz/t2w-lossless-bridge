@@ -2,7 +2,7 @@
 
 🇬🇧 [English](README.md) · 🇩🇪 Deutsch
 
-> **Beta:** getestet mit T2-W-Firmware 0.7.31 und Sonos S2. Rückmeldungen und Logs gerne als [Issue](https://github.com/blaraz/t2w-lossless-bridge/issues).
+> **Version 1.0.0** · getestet mit T2-W-Firmware 0.7.31 und Sonos S2. Bei Problemen oder Fragen bitte ein [Issue](https://github.com/blaraz/t2w-lossless-bridge/issues) mit dem Log eröffnen.
 
 Ein Docker-Container, z. B. für einen Raspberry Pi. Er bringt den Pro-Ject T2 W verlustfrei (FLAC, 24 Bit/48 kHz) auf deine Sonos-Räume und hält die Wiedergabe stabil. Einstellen musst du nichts: Plattenspieler und Sonos-Räume findet er selbst.
 
@@ -87,6 +87,7 @@ Allgemein:
 
 | Feld | Bedeutung |
 |---|---|
+| `version` | Version des Containers |
 | `upstream` | Die Adresse des T2-W-Streams. `null` bedeutet, der T2 W wurde noch nicht gefunden. |
 | `source_connected` | Der Container empfängt gerade FLAC vom T2 W |
 | `buffer_seconds` | Audio, das gerade in Reserve ist |
