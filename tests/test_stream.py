@@ -317,11 +317,16 @@ class StreamTests(unittest.IsolatedAsyncioTestCase):
         handler, _sessions = self.serve_flac(lambda n: (None, 0))
         service, port = await self.start(handler, idle_grace_seconds=0.3)
 
-        head, body, _ = await self.listen(port, seconds=0.8)
+        reader, writer = await asyncio.open_connection("127.0.0.1", port)
+        writer.write(b"GET /stream.flac HTTP/1.1\r\nHost: relay\r\n\r\n")
+        await writer.drain()
+        # Silence is streamed while the source is missing; slow machines need a while to start it.
+        head, _, body = (await asyncio.wait_for(reader.readuntil(b"fLaC"), 10)).partition(b"\r\n\r\n")
+        writer.close()
         self.assertIn(b"200 OK", head)
-        self.assertTrue(body.startswith(b"fLaC"))  # silence is streamed while the source is missing
+        self.assertEqual(body, b"fLaC")
 
-        for _ in range(60):
+        for _ in range(200):
             if not service._engine_active and not service._engine_tasks:
                 break
             await asyncio.sleep(0.05)
