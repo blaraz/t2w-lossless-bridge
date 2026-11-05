@@ -2,6 +2,8 @@
 
 🇬🇧 [English](README.md) · 🇩🇪 Deutsch
 
+> **Beta:** getestet mit T2-W-Firmware 0.7.31 und Sonos S2. Rückmeldungen und Logs gerne als [Issue](https://github.com/blaraz/t2w-lossless-bridge/issues).
+
 Ein Docker-Container, z. B. für einen Raspberry Pi. Er bringt den Pro-Ject T2 W verlustfrei (FLAC, 24 Bit/48 kHz) auf deine Sonos-Räume und hält die Wiedergabe stabil. Einstellen musst du nichts: Plattenspieler und Sonos-Räume findet er selbst.
 
 ## Warum es dieses Projekt gibt

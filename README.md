@@ -2,6 +2,8 @@
 
 🇬🇧 English · 🇩🇪 [Deutsch](README.de.md)
 
+> **Beta:** tested with T2 W firmware 0.7.31 and Sonos S2. Feedback and logs are welcome as [issues](https://github.com/blaraz/t2w-lossless-bridge/issues).
+
 A Docker container, e.g. for a Raspberry Pi. It streams the Pro-Ject T2 W turntable losslessly (FLAC, 24-bit/48 kHz) to your Sonos rooms and keeps playback stable. Nothing needs to be configured: it finds the turntable and the Sonos rooms by itself.
 
 ## Why this exists
