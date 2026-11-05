@@ -4,6 +4,23 @@
 
 Ein Docker-Container, z. B. für einen Raspberry Pi. Er bringt den Pro-Ject T2 W verlustfrei (FLAC, 24 Bit/48 kHz) auf deine Sonos-Räume und hält die Wiedergabe stabil. Einstellen musst du nichts: Plattenspieler und Sonos-Räume findet er selbst.
 
+## Warum es dieses Projekt gibt
+
+Mit eingeschaltetem „Lossless“ schickt der T2 W FLAC direkt an einen Sonos-Lautsprecher. In der Praxis ist das wacklig: Die Musik setzt aus oder bricht ab, der Lautsprecher bleibt nach „Play“ stumm, oder die Pro-Ject-App gibt mit „Lossless stream failed to start. Consider disabling lossless“ auf. Ein Blick in die Firmware 0.7.31 und auf den Stream im Netzwerk zeigt, warum:
+
+- **Keine Reserve.** Der T2 W sendet FLAC als nackten Live-Stream, genau so schnell, wie sich die Platte dreht, ohne Flusskontrolle und ohne Vorrat. Jeder Hänger des T2 W oder des Netzwerks kommt direkt beim Lautsprecher an. Reißt die Verbindung ab, hört Sonos auf.
+- **Der FLAC-Kopf kommt nur einmal.** Den Kopf, der das Audioformat beschreibt, sendet der T2 W nur beim Start seines Encoders. Ein Lautsprecher, der sich in einen laufenden Stream einklinkt (nach einem Neuverbinden, bei Autoplay oder als zweiter Raum), bekommt Audio ohne Kopf. Sonos braucht dann lange, um den Stream zu erkennen, oder spielt gar nicht.
+- **Eine strenge 9-Sekunden-Prüfung.** 9 Sekunden nach „Play“ prüft der T2 W, ob der Lautsprecher seinen Stream spielt. Ist er noch nicht so weit, z. B. weil er langsam antwortet, stellt der T2 W ihn auf MP3 um und zeigt die Meldung „Lossless stream failed“.
+- **Autoplay ohne Ton.** Nach dem Aufwachen aus dem Standby schickt der T2 W manchmal „Play“, aber kein Audio, bis man den Lautsprecher in der App neu auswählt.
+
+So löst der Container das:
+
+- **Sonos verbindet sich nie mit dem T2 W.** Sonos bekommt einen einzigen, durchgehenden Stream vom Container, der beim Spielen nie abreißt. Der Container liest den T2 W, hält eine Reserve vor und verbindet sich im Hintergrund neu, wenn der T2 W aussetzt. Kurze Aussetzer überbrückt die Reserve, längere werden zu kurzer Stille, aber Sonos bleibt verbunden und spielt weiter.
+- **Der fehlende Kopf wird ergänzt**, sodass jeder Start, jedes Neuverbinden und jeder weitere Raum innerhalb von Sekunden läuft.
+- **Die 9-Sekunden-Prüfung wird bestanden:** Der Container antwortet dem T2 W sofort und meldet die Wiedergabe rechtzeitig, auch wenn ein Sonos-Lautsprecher langsam ist.
+- **Stumme Starts werden repariert:** Schickt der T2 W „Play“, aber kein Audio, startet der Container dessen Stream neu, genau wie das erneute Auswählen in der App. Ein Watchdog startet Sonos-Räume neu, die von selbst stoppen.
+- **Es bleibt verlustfrei:** Das Audio kommt Bit für Bit bei Sonos an, und am T2 W selbst wird nichts verändert.
+
 ## Was er macht
 
 ```text
