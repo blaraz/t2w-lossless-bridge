@@ -182,6 +182,12 @@ Tested with T2 W firmware 0.7.31. A firmware update from Pro-Ject or Sonos may c
 
 The T2 W sends FLAC only to speakers from certain manufacturers. That is why the virtual speaker reports itself as "Pro-Ject Audio Systems" (`RENDERER_MANUFACTURER`). This is done solely for compatibility. This is an unofficial project and is not affiliated with Pro-Ject or Sonos.
 
+## Support
+
+If this project saves your records from dropouts, I'd be happy about a coffee:
+
+[![Buy me a coffee](https://img.shields.io/badge/Buy%20me%20a%20coffee-FFDD00?style=for-the-badge&logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/blaraz)
+
 ## License
 
 MIT, see [LICENSE](LICENSE).

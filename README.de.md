@@ -182,6 +182,12 @@ Getestet mit T2-W-Firmware 0.7.31. Ein Firmware-Update von Pro-Ject oder Sonos k
 
 Der T2 W schickt FLAC nur an Lautsprecher bestimmter Hersteller. Deshalb meldet sich der virtuelle Lautsprecher als „Pro-Ject Audio Systems“ (`RENDERER_MANUFACTURER`). Das dient allein der Kompatibilität. Dies ist ein inoffizielles Projekt, es steht in keiner Verbindung zu Pro-Ject oder Sonos.
 
+## Unterstützen
+
+Wenn dir das Projekt die Aussetzer erspart, freue ich mich über einen Kaffee:
+
+[![Buy me a coffee](https://img.shields.io/badge/Buy%20me%20a%20coffee-FFDD00?style=for-the-badge&logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/blaraz)
+
 ## Lizenz
 
 MIT, siehe [LICENSE](LICENSE).
